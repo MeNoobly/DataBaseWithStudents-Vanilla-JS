@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="js/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-3">База данных студентов</h1>
+      <form action="" class="form">
+        <div class="mb-2">
+          <label for="studentSurname" class="form-label"> Фамилия </label>
+          <input type="text" class="form-control" id="studentSurname" />
+        </div>
+        <div class="mb-2">
+          <label for="studentName" class="form-label"> Имя </label>
+          <input type="text" class="form-control" id="studentName" />
+        </div>
+        <div class="mb-2">
+          <label for="studentLastname" class="form-label"> Отчество </label>
+          <input type="text" class="form-control" id="studentLastName" />
+        </div>
+        <div class="mb-2">
+          <label for="studentBirthDay" class="form-label">
+            Дата рождения
+          </label>
+          <input type="date" class="form-control" id="studentBirthDay" />
+        </div>
+        <div class="mb-2">
+          <label for="studentStartStudyDate" class="form-label">
+            Год начала обучения
+          </label>
+          <input type="text" class="form-control" id="studentStartStudyDate" />
+        </div>
+        <div class="mb-4">
+          <label for="studentFacultet" class="form-label"> Факультет </label>
+          <input type="text" class="form-control" id="studentFacultet" />
+        </div>
+        <div class="flex">
+          <button type="submit" class="btn btn-primary">
+            Добавить студента
+          </button>
+          <button class="btn btn-primary">Очистить форму</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
