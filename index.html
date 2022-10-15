@@ -14,25 +14,26 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <script
+    <!-- <script
       defer
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"
-    ></script>
-    <script
+    ></script> -->
+    <!-- <script
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
-    ></script>
-    <script
+    ></script> -->
+    <!-- <script
       defer
       src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
     <script defer src="js/script.js"></script>
+    <title>Students Data Base</title>
   </head>
   <body>
     <div class="container">
@@ -40,37 +41,65 @@
       <form action="" class="form">
         <div class="mb-2">
           <label for="studentSurname" class="form-label"> Фамилия </label>
-          <input type="text" class="form-control" id="studentSurname" />
+          <input
+            type="text"
+            class="form-control"
+            id="studentSurname"
+            autocomplete="off"
+          />
         </div>
         <div class="mb-2">
           <label for="studentName" class="form-label"> Имя </label>
-          <input type="text" class="form-control" id="studentName" />
+          <input
+            type="text"
+            class="form-control"
+            id="studentName"
+            autocomplete="off"
+          />
         </div>
         <div class="mb-2">
           <label for="studentLastname" class="form-label"> Отчество </label>
-          <input type="text" class="form-control" id="studentLastName" />
+          <input
+            type="text"
+            class="form-control"
+            id="studentLastName"
+            autocomplete="off"
+          />
         </div>
         <div class="mb-2">
           <label for="studentBirthDay" class="form-label">
             Дата рождения
           </label>
-          <input type="date" class="form-control" id="studentBirthDay" />
+          <input
+            type="date"
+            class="form-control"
+            id="studentBirthDay"
+            autocomplete="off"
+          />
         </div>
         <div class="mb-2">
           <label for="studentStartStudyDate" class="form-label">
             Год начала обучения
           </label>
-          <input type="text" class="form-control" id="studentStartStudyDate" />
+          <input
+            type="text"
+            class="form-control"
+            id="studentStartStudyDate"
+            autocomplete="off"
+          />
         </div>
         <div class="mb-4">
           <label for="studentFacultet" class="form-label"> Факультет </label>
-          <input type="text" class="form-control" id="studentFacultet" />
+          <input
+            type="text"
+            class="form-control"
+            id="studentFacultet"
+            autocomplete="off"
+          />
         </div>
         <div class="flex">
-          <button type="submit" class="btn btn-primary">
-            Добавить студента
-          </button>
-          <button class="btn btn-primary">Очистить форму</button>
+          <button class="btn btn-primary">Добавить студента</button>
+          <button class="btn btn-danger">Очистить форму</button>
         </div>
       </form>
     </div>
