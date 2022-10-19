@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,91 +14,73 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <!-- <script
-      defer
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script> -->
-    <!-- <script
-      defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script> -->
-    <!-- <script
-      defer
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script> -->
     <script defer src="js/script.js"></script>
     <title>Students Data Base</title>
   </head>
   <body>
     <div class="container">
       <h1 class="mb-3">База данных студентов</h1>
-      <form action="" class="form">
-        <div class="mb-2">
-          <label for="studentSurname" class="form-label"> Фамилия </label>
-          <input
-            type="text"
-            class="form-control"
-            id="studentSurname"
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="studentName" class="form-label"> Имя </label>
-          <input
-            type="text"
-            class="form-control"
-            id="studentName"
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="studentLastname" class="form-label"> Отчество </label>
-          <input
-            type="text"
-            class="form-control"
-            id="studentLastName"
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="studentBirthDay" class="form-label">
-            Дата рождения
-          </label>
-          <input
-            type="date"
-            class="form-control"
-            id="studentBirthDay"
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="studentStartStudyDate" class="form-label">
-            Год начала обучения
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            id="studentStartStudyDate"
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="studentFacultet" class="form-label"> Факультет </label>
-          <input
-            type="text"
-            class="form-control"
-            id="studentFacultet"
-            autocomplete="off"
-          />
-        </div>
+      <form class="form" novalidate>
+        <label for="studentSurname" class="form-label"> Фамилия </label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="studentSurname"
+          name="studentSurname"
+          autocomplete="off"
+          required
+        />
+        <label for="studentName" class="form-label"> Имя </label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="studentName"
+          name="studentName"
+          autocomplete="off"
+          required
+        />
+        <label for="studentLastname" class="form-label"> Отчество </label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="studentLastName"
+          name="studentLastname"
+          autocomplete="off"
+          required
+        />
+        <label for="studentBirthDay" class="form-label"> Дата рождения </label>
+        <input
+          type="date"
+          class="form-control mb-2"
+          id="studentBirthDay"
+          name="studentBirthDay"
+          autocomplete="off"
+          required
+        />
+        <label for="studentStartStudyDate" class="form-label">
+          Год начала обучения
+        </label>
+        <input
+          type="text"
+          class="form-control mb-2"
+          id="studentStartStudyDate"
+          name="studentStartStudyDate"
+          autocomplete="off"
+          required
+        />
+        <label for="studentFacultet" class="form-label"> Факультет </label>
+        <input
+          type="text"
+          class="form-control mb-4"
+          id="studentFacultet"
+          name="studentFacultet"
+          autocomplete="off"
+          required
+        />
         <div class="flex mb-4">
-          <button class="btn btn-primary">Добавить студента</button>
+          <button class="btn btn-primary" type="submit">
+            Добавить студента
+          </button>
           <button class="btn btn-danger">Очистить форму</button>
         </div>
         <table class="table">
