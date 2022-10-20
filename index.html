@@ -28,8 +28,10 @@
           id="studentSurname"
           name="studentSurname"
           autocomplete="off"
+          placeholder="Иванов"
           required
         />
+        <div class="error-div mb-2"></div>
         <label for="studentName" class="form-label"> Имя </label>
         <input
           type="text"
@@ -37,8 +39,10 @@
           id="studentName"
           name="studentName"
           autocomplete="off"
+          placeholder="Иван"
           required
         />
+        <div id="errorStudentName" class="error-div mb-2"></div>
         <label for="studentLastname" class="form-label"> Отчество </label>
         <input
           type="text"
@@ -46,8 +50,10 @@
           id="studentLastName"
           name="studentLastname"
           autocomplete="off"
+          placeholder="Иванович"
           required
         />
+        <div id="errorStudentLastname" class="error-div mb-2"></div>
         <label for="studentBirthDay" class="form-label"> Дата рождения </label>
         <input
           type="date"
@@ -57,6 +63,7 @@
           autocomplete="off"
           required
         />
+        <div id="errorStudentBirthDay" class="error-div mb-2"></div>
         <label for="studentStartStudyDate" class="form-label">
           Год начала обучения
         </label>
@@ -66,8 +73,10 @@
           id="studentStartStudyDate"
           name="studentStartStudyDate"
           autocomplete="off"
+          placeholder="2000"
           required
         />
+        <div id="errorStudentStartStudyDate" class="error-div mb-2"></div>
         <label for="studentFacultet" class="form-label"> Факультет </label>
         <input
           type="text"
@@ -75,8 +84,10 @@
           id="studentFacultet"
           name="studentFacultet"
           autocomplete="off"
+          placeholder="Инфокоммуникационные системы"
           required
         />
+        <div id="errorStudentFacultet" class="error-div mb-2"></div>
         <div class="flex mb-4">
           <button class="btn btn-primary" type="submit">
             Добавить студента
