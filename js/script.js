@@ -2,6 +2,14 @@
 (function() {
     const createDataBase = {
         arrayOfObjectsWithStudents: [], // глобальный массив, содержащий объекты всех студентов
+        copyArrayOfObjectsWithStudents: [],
+        objectWithSortState: {
+            stateNumber: 0,
+            stateFIO: 0,
+            stateFacultet: 0,
+            stateBirthday: 0,
+            statePeriod: 0
+        },
 
         clearForm(...button) {
             if (button.length > 0) {
@@ -29,6 +37,7 @@
                 nowObject.facultet = allInputs[5].value;
                 
                 this.arrayOfObjectsWithStudents.push(nowObject); // добавляем обхект в глобальный массив со студентами
+                this.copyArrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.arrayOfObjectsWithStudents));
                 this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // перерисовываем таблицу со студентами
 
                 this.clearForm(); // очищаем форму после добавления студента
@@ -70,6 +79,34 @@
             }
         },
 
+        validateRussianLetters(word) { // валидация всех русских букв
+            let regular = new RegExp("[ЁёА-я]");
+            return regular.test(word);
+        },
+
+        validateDate(date) { // валидация даты
+            let splitDate = new Date(date);
+            let nowDate = new Date();
+
+            if (splitDate.getFullYear() >= 1900 && (splitDate.getTime() <= nowDate.getTime()) ) { // введённый год не должен быть больше 1900 и не должен превышать текущий год
+                return true;
+            }
+
+            return false;
+        },
+
+        validateStartStudyYear(dateOfStartStudy) { // валидация года обучения
+            let reg = new RegExp("0|[1-9]\d*");
+            let nowDate = new Date();
+            let dateOfStartStudyParse = +dateOfStartStudy;
+
+            if (dateOfStartStudyParse < 2000 || dateOfStartStudyParse > nowDate.getFullYear()) { // введённый год обучения не должен быть меньше 2000 и не должен превышать текущий год
+                return false;
+            }
+
+            return reg.test(dateOfStartStudyParse);
+        },
+
         validateForm() {
             let studentsFormInputs = document.querySelectorAll(".form-control");
             let studentsFormLabels = document.querySelectorAll(".form-label");
@@ -78,7 +115,7 @@
 
             let valuesOfInputs = Array.from(studentsFormInputs).map(item => item.value.trim()); // все введённые значения записываются в массив
 
-            if (!validateRussianLetters(valuesOfInputs[0])) {
+            if (!this.validateRussianLetters(valuesOfInputs[0])) {
                 studentsFormLabels[0].classList.add("text-danger");
                 studentsFormInputs[0].classList.add("is-invalid");
                 if (valuesOfInputs[0] === "") {
@@ -95,7 +132,7 @@
                 errorDivs[0].classList.remove("invalid-feedback");
             }
 
-            if (!validateRussianLetters(valuesOfInputs[1])) {
+            if (!this.validateRussianLetters(valuesOfInputs[1])) {
                 studentsFormLabels[1].classList.add("text-danger");
                 studentsFormInputs[1].classList.add("is-invalid");
                 if (valuesOfInputs[1] === "") {
@@ -112,7 +149,7 @@
                 errorDivs[1].classList.remove("invalid-feedback");
             }
 
-            if (!validateRussianLetters(valuesOfInputs[2])) {
+            if (!this.validateRussianLetters(valuesOfInputs[2])) {
                 studentsFormLabels[2].classList.add("text-danger");
                 studentsFormInputs[2].classList.add("is-invalid");
                 if (valuesOfInputs[2] === "") {
@@ -129,7 +166,7 @@
                 errorDivs[2].classList.remove("invalid-feedback");
             }
 
-            if (!validateDate(valuesOfInputs[3])) {
+            if (!this.validateDate(valuesOfInputs[3])) {
                 studentsFormLabels[3].classList.add("text-danger");
                 studentsFormInputs[3].classList.add("is-invalid");
                 if (valuesOfInputs[3] === "") {
@@ -146,7 +183,7 @@
                 errorDivs[3].classList.remove("invalid-feedback");
             }
 
-            if (!validateStartStudyYear(valuesOfInputs[4])) {
+            if (!this.validateStartStudyYear(valuesOfInputs[4])) {
                 studentsFormLabels[4].classList.add("text-danger");
                 studentsFormInputs[4].classList.add("is-invalid");
                 if (valuesOfInputs[4] === "") {
@@ -163,7 +200,7 @@
                 errorDivs[4].classList.remove("invalid-feedback");
             }
 
-            if (!validateRussianLetters(valuesOfInputs[5])) {
+            if (!this.validateRussianLetters(valuesOfInputs[5])) {
                 studentsFormLabels[5].classList.add("text-danger");
                 studentsFormInputs[5].classList.add("is-invalid");
                 if (valuesOfInputs[5] === "") {
@@ -180,45 +217,108 @@
                 errorDivs[5].classList.remove("invalid-feedback");
             }
             
-            function validateRussianLetters(word) { // валидация всех русских букв
-                let regular = new RegExp("[ЁёА-я]");
-                return regular.test(word);
-            }
-
-            function validateDate(date) { // валидация даты
-                let splitDate = new Date(date);
-                let nowDate = new Date();
-
-                if (splitDate.getFullYear() >= 1900 && (splitDate.getTime() <= nowDate.getTime()) ) { // введённый год не должен быть больше 1900 и не должен превышать текущий год
-                    return true;
-                }
-
-                return false;
-            }
-
-            function validateStartStudyYear(dateOfStartStudy) { // валидация года обучения
-                let reg = new RegExp("0|[1-9]\d*");
-                let nowDate = new Date();
-                let dateOfStartStudyParse = +dateOfStartStudy;
-
-                if (dateOfStartStudyParse < 2000 || dateOfStartStudyParse > nowDate.getFullYear()) { // введённый год обучения не должен быть меньше 2000 и не должен превышать текущий год
-                    return false;
-                }
-
-                return reg.test(dateOfStartStudyParse);
-            }
-
             return returnValue;
-        }, 
+        },
 
-        activateButtons() {
+        sortNumber() {
+            switch (this.objectWithSortState.stateNumber) {
+                case 0:
+                    break;
+                case 1:
+                    this.objectWithSortState.stateNumber = 2;
+                    break;
+                case 2:
+                    this.objectWithSortState.stateNumber = 0;
+                    break;
+            }
+        },
+
+        sortFIO() {
+            switch (this.objectWithSortState.stateFIO) {
+                case 0:
+                    this.objectWithSortState.stateNumber = 1;
+                    this.arrayOfObjectsWithStudents.sort((prevName, nextName) => {
+                        if (prevName < nextName) {
+                            return -1;
+                          }
+                          if (prevName > nextName) {
+                            return 1;
+                          }
+                        
+                          return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
+                    this.objectWithSortState.stateFIO = 1;
+                    break;
+                case 1:
+                    this.objectWithSortState.stateFIO = 2;
+                    break;
+                case 2:
+                    this.objectWithSortState.stateFIO = 0;
+                    break;
+            }
+        },
+
+        sortFacultet() {
+            switch (this.objectWithSortState.stateFacultet) {
+                case 0:
+                    this.objectWithSortState.stateFacultet = 1;
+                    break;
+                case 1:
+                    this.objectWithSortState.stateFacultet = 2;
+                    break;
+                case 2:
+                    this.objectWithSortState.stateFacultet = 0;
+                    break;
+            }
+        },
+
+        sortBirthday() {
+            switch (this.objectWithSortState.stateBirthday) {
+                case 0:
+                    this.objectWithSortState.stateBirthday = 1;
+                    break;
+                case 1:
+                    this.objectWithSortState.stateBirthday = 2;
+                    break;
+                case 2:
+                    this.objectWithSortState.stateBirthday = 0;
+                    break;
+            }
+        },
+
+        sortPeriod() {
+            switch (this.objectWithSortState.statePeriod) {
+                case 0:
+                    this.objectWithSortState.statePeriod = 1;
+                    break;
+                case 1:
+                    this.objectWithSortState.statePeriod = 2;
+                    break;
+                case 2:
+                    this.objectWithSortState.statePeriod = 0;
+                    break;
+            }
+        },
+
+        activateForm() {
             let buttonFormClear = document.querySelector(".btn-danger");
             let buttonFormCreate = document.querySelector(".btn-primary");
-
+            let studentNumberSpan = document.getElementById("studentNumberSort");
+            let studentFIOSpan = document.getElementById("studentFIOSort");
+            let studentFacultetSpan = document.getElementById("studentFacultetSort");
+            let studentBirthdaySpan = document.getElementById("studentBirthdaySort");
+            let studentPeriodSpan = document.getElementById("studentPeriodSort");
+            
             buttonFormClear.addEventListener("click", this.clearForm.bind(this)); // привязываем функцию с очищением формы, с учётом объекта createDataBase
             buttonFormCreate.addEventListener("click", this.addStudent.bind(this)); // привязываем функцию с созданием ученика, с учётом объекта createDataBase
+            studentNumberSpan.addEventListener("click", this.sortNumber.bind(this));
+            studentFIOSpan.addEventListener("click", this.sortFIO.bind(this));
+            studentFacultetSpan.addEventListener("click", this.sortFacultet.bind(this));
+            studentBirthdaySpan.addEventListener("click", this.sortBirthday.bind(this));
+            studentPeriodSpan.addEventListener("click", this.sortPeriod.bind(this));
         }
     };
     
-    createDataBase.activateButtons();
+    createDataBase.activateForm();
 })();

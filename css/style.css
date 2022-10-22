@@ -6,3 +6,9 @@ input:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.1s eas
 input:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.1s ease;}
 input:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.1s ease;}
 input:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.1s ease;}
+
+.svg-span {
+    text-align: center;
+    margin-left: 5px;
+    cursor: pointer;
+}
