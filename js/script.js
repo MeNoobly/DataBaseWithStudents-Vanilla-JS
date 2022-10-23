@@ -407,6 +407,33 @@
             }
         },
 
+        hideFilter() {
+            let filterInputs = document.querySelectorAll(".filter-input");
+            
+            switch(+this.id[this.id.length - 1]) {
+                case 1:
+                    filterInputs[0].classList.toggle("form-control");
+                    filterInputs[0].classList.toggle("hidden");
+                    break;
+                case 2:
+                    filterInputs[1].classList.toggle("form-control");
+                    filterInputs[1].classList.toggle("hidden");
+                    break;
+                case 3:
+                    filterInputs[2].classList.toggle("form-control");
+                    filterInputs[2].classList.toggle("hidden");
+                    break;
+                case 4:
+                    filterInputs[3].classList.toggle("form-control");
+                    filterInputs[3].classList.toggle("hidden");
+                    break;
+                case 5:
+                    filterInputs[4].classList.toggle("form-control");
+                    filterInputs[4].classList.toggle("hidden");
+                    break;
+            }
+        },
+
         activateForm() {
             let buttonFormClear = document.querySelector(".btn-danger");
             let buttonFormCreate = document.querySelector(".btn-primary");
@@ -415,7 +442,8 @@
             let studentFacultetSpan = document.getElementById("studentFacultetSort");
             let studentBirthdaySpan = document.getElementById("studentBirthdaySort");
             let studentPeriodSpan = document.getElementById("studentPeriodSort");
-            
+            let filterSpans = document.querySelectorAll(".filter-span");
+
             buttonFormClear.addEventListener("click", this.clearForm.bind(this)); // привязываем функцию с очищением формы, с учётом объекта createDataBase
             buttonFormCreate.addEventListener("click", this.addStudent.bind(this)); // привязываем функцию с созданием ученика, с учётом объекта createDataBase
             studentNumberSpan.addEventListener("click", this.sortNumber.bind(this));
@@ -423,6 +451,7 @@
             studentFacultetSpan.addEventListener("click", this.sortFacultet.bind(this));
             studentBirthdaySpan.addEventListener("click", this.sortBirthday.bind(this));
             studentPeriodSpan.addEventListener("click", this.sortPeriod.bind(this));
+            filterSpans.forEach(item => item.addEventListener("click", this.hideFilter.bind(item)));
         }
     };
     
