@@ -32,23 +32,26 @@
                 nowObject.surname = allInputs[0].value[0].toUpperCase() + allInputs[0].value.trim().toLowerCase().substr(1, allInputs[0].value.length); 
                 nowObject.name = allInputs[1].value[1].toUpperCase() + allInputs[1].value.trim().toLowerCase().substr(1, allInputs[1].value.length);
                 nowObject.lastname = allInputs[2].value[2].toUpperCase() + allInputs[2].value.trim().toLowerCase().substr(1, allInputs[2].value.length);
-                nowObject.birthDate = new Date(allInputs[3].value); // в свойство birthDate записываем объект с введённой датой
+                nowObject.birthDate = allInputs[3].value; // в свойство birthDate записываем объект с введённой датой
                 nowObject.startStudyYear = allInputs[4].value;
                 nowObject.facultet = allInputs[5].value;
-                
+                nowObject.numberOfStudent = this.arrayOfObjectsWithStudents.length + 1;
+
                 this.arrayOfObjectsWithStudents.push(nowObject); // добавляем обхект в глобальный массив со студентами
                 this.copyArrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.arrayOfObjectsWithStudents));
                 this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // перерисовываем таблицу со студентами
 
                 this.clearForm(); // очищаем форму после добавления студента
             }
+            console.log(this.arrayOfObjectsWithStudents);
+            console.log(this.copyArrayOfObjectsWithStudents);
         },
 
         drawTableWithStudents(array) {
             let tbody = document.getElementById("tbody");
             tbody.innerHTML = ''; // очищаем тело таблицы
 
-            for (let i = 1; i < array.length + 1; i++) { // цикл с перебором всех значений в переданном в функцию массиве
+            for (const nowStudent of this.arrayOfObjectsWithStudents) { // цикл с перебором всех значений в переданном в функцию массиве
                 // создание элементов таблицы
                 let trOfTable = document.createElement("tr");
                 let thOfTable = document.createElement("th");
@@ -57,17 +60,16 @@
                 let birthDateTd = document.createElement("td");
                 let periodOfStudy = document.createElement("td");
 
-                let nowStudent = array[i - 1];
                 let dateNow = new Date(); // получаем дату в текущий момент
                 let yearsFromStartStudy = dateNow.getFullYear() - nowStudent.startStudyYear; // получаем, сколько лет мы учимся, вычитая из текущего года год поступления
-                let ageOfStudent = Math.trunc((dateNow.getTime() - nowStudent.birthDate.getTime()) / 31536000000); // получаем полный возраст ученика
+                let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(nowStudent.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
 
-                thOfTable.textContent = i; // номер каждого ученика
+                thOfTable.textContent = nowStudent.numberOfStudent; // номер каждого ученика
                 thOfTable.setAttribute("scope", "row"); // добавляем атрибут для айди 
 
                 fioTd.textContent = nowStudent.surname + " " + nowStudent.name + " " + nowStudent.lastname; // полное ФИО ученика
                 facultetTd.textContent = nowStudent.facultet; // факультет ученика
-                birthDateTd.textContent = `${nowStudent.birthDate.getDate()}.${nowStudent.birthDate.getMonth() + 1}.${nowStudent.birthDate.getFullYear()} (${ageOfStudent} лет)`; // дата рождения ученика с его возрастом
+                birthDateTd.textContent = `${new Date(nowStudent.birthDate).getDate()}.${new Date(nowStudent.birthDate).getMonth() + 1}.${new Date(nowStudent.birthDate).getFullYear()} (${ageOfStudent} лет)`; // дата рождения ученика с его возрастом
                 periodOfStudy.textContent = (yearsFromStartStudy > 4 || yearsFromStartStudy == 4 && dateNow.getMonth() > 9 || yearsFromStartStudy + 1 === 5) ?
                 `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (закончил)` : // если ученик закончил институт, годы обучение и статус "закончил"
                 dateNow.getMonth() < 9 ? // месяц меньше февраля
@@ -223,11 +225,31 @@
         sortNumber() {
             switch (this.objectWithSortState.stateNumber) {
                 case 0:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.numberOfStudent > next.numberOfStudent) {
+                            return -1;
+                        }
+                        if (prev.numberOfStudent < next.numberOfStudent) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
+                    this.objectWithSortState.stateNumber = 1;
                     break;
                 case 1:
-                    this.objectWithSortState.stateNumber = 2;
-                    break;
-                case 2:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.numberOfStudent < next.numberOfStudent) {
+                            return -1;
+                        }
+                        if (prev.numberOfStudent > next.numberOfStudent) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateNumber = 0;
                     break;
             }
@@ -236,24 +258,36 @@
         sortFIO() {
             switch (this.objectWithSortState.stateFIO) {
                 case 0:
-                    this.objectWithSortState.stateNumber = 1;
-                    this.arrayOfObjectsWithStudents.sort((prevName, nextName) => {
-                        if (prevName < nextName) {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.surname + prev.name + prev.lastname < next.surname + next.name + next.lastname) {
                             return -1;
-                          }
-                          if (prevName > nextName) {
+                        }
+                        if (prev.surname + prev.name + prev.lastname > next.surname + next.name + next.lastname) {
                             return 1;
-                          }
+                        }
                         
-                          return 0;
+                        return 0;
                     });
                     this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFIO = 1;
                     break;
                 case 1:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.surname + prev.name + prev.lastname > next.surname + next.name + next.lastname) {
+                            return -1;
+                        }
+                        if (prev.surname + prev.name + prev.lastname < next.surname + next.name + next.lastname) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFIO = 2;
                     break;
                 case 2:
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFIO = 0;
                     break;
             }
@@ -262,12 +296,36 @@
         sortFacultet() {
             switch (this.objectWithSortState.stateFacultet) {
                 case 0:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.facultet < next.facultet) {
+                            return -1;
+                        }
+                        if (prev.facultet > next.facultet) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFacultet = 1;
                     break;
                 case 1:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (prev.facultet > next.facultet) {
+                            return -1;
+                        }
+                        if (prev.facultet < next.facultet) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFacultet = 2;
                     break;
                 case 2:
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateFacultet = 0;
                     break;
             }
@@ -276,12 +334,36 @@
         sortBirthday() {
             switch (this.objectWithSortState.stateBirthday) {
                 case 0:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (new Date(prev.birthDate).getTime() > new Date(next.birthDate).getTime()) {
+                            return -1;
+                        }
+                        if (new Date(prev.birthDate).getTime() < new Date(next.birthDate).getTime()) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateBirthday = 1;
                     break;
                 case 1:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (new Date(prev.birthDate).getTime() < new Date(next.birthDate).getTime()) {
+                            return -1;
+                        }
+                        if (new Date(prev.birthDate).getTime() > new Date(next.birthDate).getTime()) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateBirthday = 2;
                     break;
                 case 2:
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.stateBirthday = 0;
                     break;
             }
@@ -290,12 +372,36 @@
         sortPeriod() {
             switch (this.objectWithSortState.statePeriod) {
                 case 0:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (+prev.startStudyYear > +next.startStudyYear) {
+                            return -1;
+                        }
+                        if (+prev.startStudyYear < +next.startStudyYear) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.statePeriod = 1;
                     break;
                 case 1:
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                        if (+prev.startStudyYear < +next.startStudyYear) {
+                            return -1;
+                        }
+                        if (+prev.startStudyYear > +next.startStudyYear) {
+                            return 1;
+                        }
+                        
+                        return 0;
+                    });
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.statePeriod = 2;
                     break;
                 case 2:
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
                     this.objectWithSortState.statePeriod = 0;
                     break;
             }
