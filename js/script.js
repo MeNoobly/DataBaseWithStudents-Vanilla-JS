@@ -38,7 +38,7 @@
                 nowObject.numberOfStudent = this.arrayOfObjectsWithStudents.length + 1;
 
                 this.arrayOfObjectsWithStudents.push(nowObject); // добавляем обхект в глобальный массив со студентами
-                this.copyArrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.arrayOfObjectsWithStudents));
+                this.copyArrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.arrayOfObjectsWithStudents)); // копируем в массив с копией всеь массив со студентами
                 this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // перерисовываем таблицу со студентами
 
                 this.clearForm(); // очищаем форму после добавления студента
@@ -48,7 +48,7 @@
         drawTableWithStudents(array) {
             let tbody = document.getElementById("tbody");
             tbody.innerHTML = ''; // очищаем тело таблицы
-            if (array.length > 0) {
+            if (array.length > 0) { // Если в массиве есть хотя бы один объект с учениками
                 for (const nowStudent of array) { // цикл с перебором всех значений в переданном в функцию массиве
                     // создание элементов таблицы
                     let trOfTable = document.createElement("tr");
@@ -225,7 +225,7 @@
         sortNumber() {
             switch (this.objectWithSortState.stateNumber) {
                 case 0:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка по убыванию
                         if (prev.numberOfStudent > next.numberOfStudent) {
                             return -1;
                         }
@@ -235,11 +235,11 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateNumber = 1;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateNumber = 1; // меняем состояние
                     break;
                 case 1:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка по возрастанию
                         if (prev.numberOfStudent < next.numberOfStudent) {
                             return -1;
                         }
@@ -249,16 +249,16 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateNumber = 0;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateNumber = 0; // меняем состояние
                     break;
             }
         },
 
         sortFIO() {
             switch (this.objectWithSortState.stateFIO) {
-                case 0:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                case 0: 
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка ФИО по алфавиту
                         if (prev.surname + prev.name + prev.lastname < next.surname + next.name + next.lastname) {
                             return -1;
                         }
@@ -268,11 +268,11 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFIO = 1;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFIO = 1; // меняем состояние
                     break;
                 case 1:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка ФИО по алфавиту в обратном порядке
                         if (prev.surname + prev.name + prev.lastname > next.surname + next.name + next.lastname) {
                             return -1;
                         }
@@ -282,13 +282,13 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFIO = 2;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFIO = 2; // меняем состояние
                     break;
                 case 2:
-                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFIO = 0;
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents)); // возвращаем изначальный порядок
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFIO = 0; // меняем состояние 
                     break;
             }
         },
@@ -296,7 +296,7 @@
         sortFacultet() {
             switch (this.objectWithSortState.stateFacultet) {
                 case 0:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка факультета по алфавиту
                         if (prev.facultet < next.facultet) {
                             return -1;
                         }
@@ -306,11 +306,11 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFacultet = 1;
-                    break;
-                case 1:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFacultet = 1; // меняем состояние 
+                    break; 
+                case 1: 
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка факультета по алфавиту в обратном порядке
                         if (prev.facultet > next.facultet) {
                             return -1;
                         }
@@ -320,13 +320,13 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFacultet = 2;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFacultet = 2; // меняем состояние 
                     break;
                 case 2:
-                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateFacultet = 0;
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents)); // возвращаем изначальный порядок
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateFacultet = 0; // меняем состояние 
                     break;
             }
         },
@@ -334,7 +334,7 @@
         sortBirthday() {
             switch (this.objectWithSortState.stateBirthday) {
                 case 0:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка даты рождения по убыванию
                         if (new Date(prev.birthDate).getTime() > new Date(next.birthDate).getTime()) {
                             return -1;
                         }
@@ -343,12 +343,12 @@
                         }
                         
                         return 0;
-                    });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateBirthday = 1;
+                    }); 
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateBirthday = 1; // меняем состояние
                     break;
                 case 1:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка даты рождения по возрастанию
                         if (new Date(prev.birthDate).getTime() < new Date(next.birthDate).getTime()) {
                             return -1;
                         }
@@ -358,13 +358,13 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateBirthday = 2;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateBirthday = 2; // меняем состояние
                     break;
                 case 2:
-                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.stateBirthday = 0;
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents)); // возвращаем изначальный порядок
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.stateBirthday = 0; // меняем состояние
                     break;
             }
         },
@@ -372,7 +372,7 @@
         sortPeriod() {
             switch (this.objectWithSortState.statePeriod) {
                 case 0:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка периода обучения по началу обучения, по убыванию
                         if (+prev.startStudyYear > +next.startStudyYear) {
                             return -1;
                         }
@@ -382,11 +382,11 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.statePeriod = 1;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.statePeriod = 1; // меняем состояние
                     break;
                 case 1:
-                    this.arrayOfObjectsWithStudents.sort((prev, next) => {
+                    this.arrayOfObjectsWithStudents.sort((prev, next) => { // сортировка периода обучения по началу обучения, по возрастанию
                         if (+prev.startStudyYear < +next.startStudyYear) {
                             return -1;
                         }
@@ -396,21 +396,21 @@
                         
                         return 0;
                     });
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.statePeriod = 2;
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.statePeriod = 2; // меняем состояние
                     break;
                 case 2:
-                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents));
-                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents);
-                    this.objectWithSortState.statePeriod = 0;
+                    this.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(this.copyArrayOfObjectsWithStudents)); // возвращаем изначальный порядок
+                    this.drawTableWithStudents(this.arrayOfObjectsWithStudents); // выводим таблицу
+                    this.objectWithSortState.statePeriod = 0; // меняем состояние
                     break;
             }
         },
 
         hideFilter() {
-            let filterInputs = document.querySelectorAll(".filter-input");
+            let filterInputs = document.querySelectorAll(".filter-input"); // ищем все инпуты фильтров
             
-            switch(+this.id[this.id.length - 1]) {
+            switch(+this.id[this.id.length - 1]) { // смотрим на последний символ id и переключаем состояния включения и выключения
                 case 1:
                     filterInputs[0].classList.toggle("form-control");
                     filterInputs[0].classList.toggle("hidden");
@@ -435,67 +435,49 @@
         },
 
         filterColumn() {
-            let filterInputs = document.querySelectorAll(".filter-input");
-            let newArrayWithStudents;
-            let dateNow = new Date();
+            let filterInputs = document.querySelectorAll(".filter-input"); // ищем все инпуты с фильтром
+            let dateNow = new Date(); // получаем текущую дату
             
-            switch(+this.id[this.id.length - 1]) {
-                case 1:
-                    if (filterInputs[0].value !== "") {
-                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => item.numberOfStudent === +filterInputs[0].value);
-                        createDataBase.drawTableWithStudents(newArrayWithStudents);
-                    } else {
-                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
-                    }
-                    break;
-                case 2:
-                    if (filterInputs[1].value !== "") {
-                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
-                            let fio = item.surname + " " + item.name + " " + item.lastname;
-                            return fio.includes(filterInputs[1].value);
-                        });
-                        createDataBase.drawTableWithStudents(newArrayWithStudents);
-                    } else {
-                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
-                    }
-                    break;
-                case 3:
-                    if (filterInputs[2].value !== "") {
-                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
-                            let facultetForFind = item.facultet;
-                            return facultetForFind.includes(filterInputs[2].value);
-                        });
-                        createDataBase.drawTableWithStudents(newArrayWithStudents);
-                    } else {
-                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
-                    }
-                    break;
-                case 4:
-                    if (filterInputs[3].value !== "") {
-                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
-                            let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(item.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
-                            let birthday = `${new Date(item.birthDate).getDate()}.${new Date(item.birthDate).getMonth() + 1}.${new Date(item.birthDate).getFullYear()} (${ageOfStudent} лет)`;
-                            return birthday.includes(filterInputs[3].value);        
-                        });
-                        createDataBase.drawTableWithStudents(newArrayWithStudents);
-                    } else {
-                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
-                    }
-                    break;
-                case 5:
-                    if (filterInputs[4].value !== "") {
-                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
-                            let courseOfStudent = dateNow.getMonth() < 9 ? dateNow.getFullYear() - item.startStudyYear : dateNow.getFullYear() - item.startStudyYear + 1;
-                            return  +item.startStudyYear === +filterInputs[4].value || 
-                            +item.startStudyYear + 4 === +filterInputs[4].value || 
-                            courseOfStudent === +filterInputs[4].value;         
-                        });
-                        createDataBase.drawTableWithStudents(newArrayWithStudents);
-                    } else {
-                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
-                    }
-                    break;
+            if (filterInputs[0].value !== "" || 
+            filterInputs[1].value !== "" || 
+            filterInputs[2].value !== "" ||
+            filterInputs[3].value !== "" ||
+            filterInputs[4].value !== "") { // проверяем, что есть хотя бы не один не пустой фильтр
+                if (filterInputs[0].value !== "") { // ...если это фильтр с номером студента
+                    createDataBase.arrayOfObjectsWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => item.numberOfStudent === +filterInputs[0].value); // фильтруем массив по введённому номеру
+                }
+                if (filterInputs[1].value !== "") { // ...если это фильтр с фио студента
+                    createDataBase.arrayOfObjectsWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                        let fioForFilter = item.surname + " " + item.name + " " + item.lastname; // создаём строку с полным именем
+                        return fioForFilter.includes(filterInputs[1].value); // ищем, если есть вхождения введённого значения в строку fioForFilter
+                    });
+                }
+                if (filterInputs[2].value !== "") { // ...если это фильтр с факультетом студента
+                    createDataBase.arrayOfObjectsWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                        return item.facultet.includes(filterInputs[2].value); // ищем, если есть вхождения введённого значения в item.facultet
+                    });
+                }
+                if (filterInputs[3].value !== "") { // ...если это фильтр с датой рождения студента
+                    createDataBase.arrayOfObjectsWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                        let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(item.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
+                        let birthday = `${new Date(item.birthDate).getDate()}.${new Date(item.birthDate).getMonth() + 1}.${new Date(item.birthDate).getFullYear()} (${ageOfStudent} лет)`; // получаем строку с датой рождения студента
+                        return birthday.includes(filterInputs[3].value);  // ищем, если есть вхождения введённого значения в строку birthday      
+                    });
+                }
+                if (filterInputs[4].value !== "") { // ...если это фильтр с периодом обучения студента
+                    createDataBase.arrayOfObjectsWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                        let courseOfStudent = dateNow.getMonth() < 9 ? dateNow.getFullYear() - item.startStudyYear : dateNow.getFullYear() - item.startStudyYear + 1; // получаем, на каком курме студент
+                        return  +item.startStudyYear === +filterInputs[4].value || // если введён год начала обучения, год окончания обучения или курс студента
+                        +item.startStudyYear + 4 === +filterInputs[4].value || 
+                        courseOfStudent === +filterInputs[4].value; 
+                    });
+                }
+               
+            } else {
+                createDataBase.arrayOfObjectsWithStudents = JSON.parse(JSON.stringify(createDataBase.copyArrayOfObjectsWithStudents)); // если все фильтры пусты, то рисуется первоначальная таблица
             }
+            createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents); // рисуем получившийся результат
+            
         },
 
         activateForm() {
@@ -511,13 +493,13 @@
             
             buttonFormClear.addEventListener("click", this.clearForm.bind(this)); // привязываем функцию с очищением формы, с учётом объекта createDataBase
             buttonFormCreate.addEventListener("click", this.addStudent.bind(this)); // привязываем функцию с созданием ученика, с учётом объекта createDataBase
-            studentNumberSpan.addEventListener("click", this.sortNumber.bind(this));
-            studentFIOSpan.addEventListener("click", this.sortFIO.bind(this));
-            studentFacultetSpan.addEventListener("click", this.sortFacultet.bind(this));
-            studentBirthdaySpan.addEventListener("click", this.sortBirthday.bind(this));
-            studentPeriodSpan.addEventListener("click", this.sortPeriod.bind(this));
-            filterSpans.forEach(item => item.addEventListener("click", this.hideFilter.bind(item)));
-            filterInputs.forEach(item => item.addEventListener("input", this.filterColumn.bind(item)));
+            studentNumberSpan.addEventListener("click", this.sortNumber.bind(this)); // привязываем функцию с сортировкой
+            studentFIOSpan.addEventListener("click", this.sortFIO.bind(this)); // привязываем функцию с сортировкой
+            studentFacultetSpan.addEventListener("click", this.sortFacultet.bind(this)); // привязываем функцию с сортировкой
+            studentBirthdaySpan.addEventListener("click", this.sortBirthday.bind(this)); // привязываем функцию с сортировкой
+            studentPeriodSpan.addEventListener("click", this.sortPeriod.bind(this)); // привязываем функцию с сортировкой
+            filterSpans.forEach(item => item.addEventListener("click", this.hideFilter.bind(item))); // привязываем функцию с сокрытием фильтров
+            filterInputs.forEach(item => item.addEventListener("input", this.filterColumn.bind(item))); // привязываем функцию с фильтрации колонки
         }
     };
     
