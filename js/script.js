@@ -43,42 +43,42 @@
 
                 this.clearForm(); // очищаем форму после добавления студента
             }
-            console.log(this.arrayOfObjectsWithStudents);
-            console.log(this.copyArrayOfObjectsWithStudents);
         },
 
         drawTableWithStudents(array) {
             let tbody = document.getElementById("tbody");
             tbody.innerHTML = ''; // очищаем тело таблицы
+            if (array.length > 0) {
+                for (const nowStudent of array) { // цикл с перебором всех значений в переданном в функцию массиве
+                    // создание элементов таблицы
+                    let trOfTable = document.createElement("tr");
+                    let thOfTable = document.createElement("th");
+                    let fioTd = document.createElement("td");
+                    let facultetTd = document.createElement("td");
+                    let birthDateTd = document.createElement("td");
+                    let periodOfStudy = document.createElement("td");
 
-            for (const nowStudent of this.arrayOfObjectsWithStudents) { // цикл с перебором всех значений в переданном в функцию массиве
-                // создание элементов таблицы
-                let trOfTable = document.createElement("tr");
-                let thOfTable = document.createElement("th");
-                let fioTd = document.createElement("td");
-                let facultetTd = document.createElement("td");
-                let birthDateTd = document.createElement("td");
-                let periodOfStudy = document.createElement("td");
+                    let dateNow = new Date(); // получаем дату в текущий момент
+                    let yearsFromStartStudy = dateNow.getFullYear() - nowStudent.startStudyYear; // получаем, сколько лет мы учимся, вычитая из текущего года год поступления
+                    let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(nowStudent.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
 
-                let dateNow = new Date(); // получаем дату в текущий момент
-                let yearsFromStartStudy = dateNow.getFullYear() - nowStudent.startStudyYear; // получаем, сколько лет мы учимся, вычитая из текущего года год поступления
-                let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(nowStudent.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
+                    thOfTable.textContent = nowStudent.numberOfStudent; // номер каждого ученика
+                    thOfTable.setAttribute("scope", "row"); // добавляем атрибут для айди 
 
-                thOfTable.textContent = nowStudent.numberOfStudent; // номер каждого ученика
-                thOfTable.setAttribute("scope", "row"); // добавляем атрибут для айди 
-
-                fioTd.textContent = nowStudent.surname + " " + nowStudent.name + " " + nowStudent.lastname; // полное ФИО ученика
-                facultetTd.textContent = nowStudent.facultet; // факультет ученика
-                birthDateTd.textContent = `${new Date(nowStudent.birthDate).getDate()}.${new Date(nowStudent.birthDate).getMonth() + 1}.${new Date(nowStudent.birthDate).getFullYear()} (${ageOfStudent} лет)`; // дата рождения ученика с его возрастом
-                periodOfStudy.textContent = (yearsFromStartStudy > 4 || yearsFromStartStudy == 4 && dateNow.getMonth() > 9 || yearsFromStartStudy + 1 === 5) ?
-                `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (закончил)` : // если ученик закончил институт, годы обучение и статус "закончил"
-                dateNow.getMonth() < 9 ? // месяц меньше февраля
-                `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (${yearsFromStartStudy} курс)` : // если ученик не перешёл на следующий курс
-                `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (${yearsFromStartStudy + 1} курс)`; // если ученик перешёл на следующий курс
-                
-                trOfTable.append(thOfTable, fioTd, facultetTd, birthDateTd, periodOfStudy); // добавляем элементы таблицы в tr
-                tbody.append(trOfTable); // добавляем tr в тело таблицы
+                    fioTd.textContent = nowStudent.surname + " " + nowStudent.name + " " + nowStudent.lastname; // полное ФИО ученика
+                    facultetTd.textContent = nowStudent.facultet; // факультет ученика
+                    birthDateTd.textContent = `${new Date(nowStudent.birthDate).getDate()}.${new Date(nowStudent.birthDate).getMonth() + 1}.${new Date(nowStudent.birthDate).getFullYear()} (${ageOfStudent} лет)`; // дата рождения ученика с его возрастом
+                    periodOfStudy.textContent = (yearsFromStartStudy > 4 || yearsFromStartStudy == 4 && dateNow.getMonth() > 9 || yearsFromStartStudy + 1 === 5) ?
+                    `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (закончил)` : // если ученик закончил институт, годы обучение и статус "закончил"
+                    dateNow.getMonth() < 9 ? // месяц меньше февраля
+                    `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (${yearsFromStartStudy} курс)` : // если ученик не перешёл на следующий курс
+                    `${nowStudent.startStudyYear}-${+nowStudent.startStudyYear + 4} (${yearsFromStartStudy + 1} курс)`; // если ученик перешёл на следующий курс
+                    
+                    trOfTable.append(thOfTable, fioTd, facultetTd, birthDateTd, periodOfStudy); // добавляем элементы таблицы в tr
+                    tbody.append(trOfTable); // добавляем tr в тело таблицы
+                }
             }
+            
         },
 
         validateRussianLetters(word) { // валидация всех русских букв
@@ -434,6 +434,70 @@
             }
         },
 
+        filterColumn() {
+            let filterInputs = document.querySelectorAll(".filter-input");
+            let newArrayWithStudents;
+            let dateNow = new Date();
+            
+            switch(+this.id[this.id.length - 1]) {
+                case 1:
+                    if (filterInputs[0].value !== "") {
+                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => item.numberOfStudent === +filterInputs[0].value);
+                        createDataBase.drawTableWithStudents(newArrayWithStudents);
+                    } else {
+                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
+                    }
+                    break;
+                case 2:
+                    if (filterInputs[1].value !== "") {
+                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                            let fio = item.surname + " " + item.name + " " + item.lastname;
+                            return fio.includes(filterInputs[1].value);
+                        });
+                        createDataBase.drawTableWithStudents(newArrayWithStudents);
+                    } else {
+                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
+                    }
+                    break;
+                case 3:
+                    if (filterInputs[2].value !== "") {
+                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                            let facultetForFind = item.facultet;
+                            return facultetForFind.includes(filterInputs[2].value);
+                        });
+                        createDataBase.drawTableWithStudents(newArrayWithStudents);
+                    } else {
+                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
+                    }
+                    break;
+                case 4:
+                    if (filterInputs[3].value !== "") {
+                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                            let ageOfStudent = Math.trunc((dateNow.getTime() - new Date(item.birthDate).getTime()) / 31536000000); // получаем полный возраст ученика
+                            let birthday = `${new Date(item.birthDate).getDate()}.${new Date(item.birthDate).getMonth() + 1}.${new Date(item.birthDate).getFullYear()} (${ageOfStudent} лет)`;
+                            return birthday.includes(filterInputs[3].value);        
+                        });
+                        createDataBase.drawTableWithStudents(newArrayWithStudents);
+                    } else {
+                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
+                    }
+                    break;
+                case 5:
+                    if (filterInputs[4].value !== "") {
+                        newArrayWithStudents = createDataBase.arrayOfObjectsWithStudents.filter(item => {
+                            let courseOfStudent = dateNow.getMonth() < 9 ? dateNow.getFullYear() - item.startStudyYear : dateNow.getFullYear() - item.startStudyYear + 1;
+                            return  +item.startStudyYear === +filterInputs[4].value || 
+                            +item.startStudyYear + 4 === +filterInputs[4].value || 
+                            courseOfStudent === +filterInputs[4].value;         
+                        });
+                        createDataBase.drawTableWithStudents(newArrayWithStudents);
+                    } else {
+                        createDataBase.drawTableWithStudents(createDataBase.arrayOfObjectsWithStudents);
+                    }
+                    break;
+            }
+        },
+
         activateForm() {
             let buttonFormClear = document.querySelector(".btn-danger");
             let buttonFormCreate = document.querySelector(".btn-primary");
@@ -443,7 +507,8 @@
             let studentBirthdaySpan = document.getElementById("studentBirthdaySort");
             let studentPeriodSpan = document.getElementById("studentPeriodSort");
             let filterSpans = document.querySelectorAll(".filter-span");
-
+            let filterInputs = document.querySelectorAll(".filter-input");
+            
             buttonFormClear.addEventListener("click", this.clearForm.bind(this)); // привязываем функцию с очищением формы, с учётом объекта createDataBase
             buttonFormCreate.addEventListener("click", this.addStudent.bind(this)); // привязываем функцию с созданием ученика, с учётом объекта createDataBase
             studentNumberSpan.addEventListener("click", this.sortNumber.bind(this));
@@ -452,6 +517,7 @@
             studentBirthdaySpan.addEventListener("click", this.sortBirthday.bind(this));
             studentPeriodSpan.addEventListener("click", this.sortPeriod.bind(this));
             filterSpans.forEach(item => item.addEventListener("click", this.hideFilter.bind(item)));
+            filterInputs.forEach(item => item.addEventListener("input", this.filterColumn.bind(item)));
         }
     };
     
